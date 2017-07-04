@@ -1,3 +1,4 @@
+# coding=utf-8
 # Copyright 2016 Mycroft AI, Inc.
 #
 # This file is part of Mycroft Core.
@@ -36,6 +37,7 @@ __author__ = 'guilhem B.'
 # statements will show up in the command line when running Mycroft.
 LOGGER = getLogger(__name__)
 
+
 # The logic of each skill is contained within its own class, which inherits
 # base methods from the MycroftSkill class with the syntax you can see below:
 # "class ____Skill(MycroftSkill)"
@@ -49,7 +51,7 @@ class SlackSkill(MycroftSkill):
     # creates and registers each intent that the skill uses
     def initialize(self):
         self.load_data_files(dirname(__file__))
-
+        self.slack_url = "https://hooks.slack.com/services/" + self.config.get("incoming_webhook_url")
         send_slack_intent = IntentBuilder("SendSlackIntent")\
             .require("SlackSkillSendKeyword")\
             .require("SlackSkillKeyword").build()
@@ -62,8 +64,7 @@ class SlackSkill(MycroftSkill):
     # of a file in the dialog folder, and Mycroft speaks its contents when
     # the method is called.
     def __handle_send_slack_intent(self, message):
-        r = requests.post("https://hooks.slack.com/services/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",
-                            json={"text": "Coucou les copains !"})
+        r = requests.post(self.slack_url, json={"text": "Coucou les copains, ça va ?"})
         self.speak_dialog("sent")
 
     # The "stop" method defines what Mycroft does when told to stop during
