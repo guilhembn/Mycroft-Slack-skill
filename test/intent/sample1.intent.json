@@ -1,0 +1,8 @@
+{
+  "utterance": "send hi guys on slack",
+  "intent_type": "SendSlackIntent",
+  "intent": {
+    "SlackSkillKeyword": "slack",
+    "SlackSkillSendKeyword": "send"
+  }
+}
