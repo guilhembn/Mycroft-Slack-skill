@@ -13,9 +13,11 @@ To get this done we need
 ## Current state
 
 Working features:
- - `Send ... on Slack` Send fixed message on Slack
+ - `Send <my message> on Slack` Send <my message> on slack !
 
 Known issues:
 
 TODO:
- - Add regexp to send what user wants !
+ - Adds vocal feedback ("sending <my message>")
+ - Adds channel selection
+ - Adds getting last messages on specific channel

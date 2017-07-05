@@ -24,7 +24,7 @@
 
 # Import statements: the list of outside modules you'll be using in your
 # skills, whether from other files in mycroft-core or from external libraries
-from os.path import dirname
+from os.path import dirname, join
 
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
@@ -51,10 +51,12 @@ class SlackSkill(MycroftSkill):
     # creates and registers each intent that the skill uses
     def initialize(self):
         self.load_data_files(dirname(__file__))
+        self.load_regex_files(join(dirname(__file__), 'regex', self.lang))
+
         self.slack_url = "https://hooks.slack.com/services/" + self.config.get("incoming_webhook_url")
         send_slack_intent = IntentBuilder("SendSlackIntent")\
             .require("SlackSkillSendKeyword")\
-            .require("SlackSkillKeyword").build()
+            .require("SlackSkillKeyword").optionally("Slack_message").build()
         self.register_intent(send_slack_intent, self.__handle_send_slack_intent)
 
     # The "handle_xxxx_intent" functions define Mycroft's behavior when
@@ -64,7 +66,8 @@ class SlackSkill(MycroftSkill):
     # of a file in the dialog folder, and Mycroft speaks its contents when
     # the method is called.
     def __handle_send_slack_intent(self, message):
-        r = requests.post(self.slack_url, json={"text": "Coucou les copains, ça va ?"})
+        slack_message = message.data.get("Slack_message",None)
+        r = requests.post(self.slack_url, json={"text": slack_message})
         self.speak_dialog("sent")
 
     # The "stop" method defines what Mycroft does when told to stop during
