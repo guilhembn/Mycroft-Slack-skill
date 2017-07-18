@@ -4,10 +4,10 @@ Mycroft will speak with Slack !
 This skill allows to send messages on Slack
 
 To get this done we need
-  - Add an incoming webhook to the team wanted
-  - Write `"SlackSkill": {
+  - Add the app `Incoming Webhooks` to the team wanted on Slack.
+  - Add `"SlackSkill": {
     "incoming_webhook_url": "TXXXXXXXX/BXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
-  }` (Replace with the end of the URL provided by the incoming webhook app)
+  }` in the [mycroft config file](https://docs.mycroft.ai/skills.and.features/config) (Replace with the end of the URL provided by the incoming webhook app)
 
 
 ## Current state
